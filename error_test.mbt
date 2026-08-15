@@ -17,7 +17,7 @@ test "every stage code resolves and round-trips through its name" {
 ///|
 test "every kind code resolves and round-trips through its name" {
   let codes = all_kind_codes()
-  assert_eq(codes.length(), 17)
+  assert_eq(codes.length(), 18)
   for i = 0; i < codes.length(); i = i + 1 {
     let code = codes[i]
     let k = kind_of_code(code)

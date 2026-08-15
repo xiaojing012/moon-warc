@@ -48,6 +48,7 @@ pub enum WarcErrorKind {
   InvalidSeparator
   TrailingGarbage
   LimitExceeded
+  InvalidFieldValue
 } derive(Eq, @debug.Debug)
 
 ///|
@@ -89,7 +90,7 @@ pub fn all_kind_codes() -> Array[String] {
     "unexpected-eof", "invalid-version", "missing-colon", "invalid-field-name", "invalid-utf8",
     "invalid-content-length", "integer-overflow", "content-length-mismatch", "missing-required-field",
     "duplicate-field", "invalid-date", "invalid-uri", "invalid-digest", "invalid-record-type",
-    "invalid-separator", "trailing-garbage", "limit-exceeded",
+    "invalid-separator", "trailing-garbage", "limit-exceeded", "invalid-field-value",
   ]
 }
 
@@ -138,6 +139,7 @@ pub fn kind_of_code(code : String) -> WarcErrorKind? {
     "invalid-separator" => Some(InvalidSeparator)
     "trailing-garbage" => Some(TrailingGarbage)
     "limit-exceeded" => Some(LimitExceeded)
+    "invalid-field-value" => Some(InvalidFieldValue)
     _ => None
   }
 }
@@ -186,6 +188,7 @@ pub fn WarcErrorKind::kind_name(self : WarcErrorKind) -> String {
     InvalidSeparator => "invalid-separator"
     TrailingGarbage => "trailing-garbage"
     LimitExceeded => "limit-exceeded"
+    InvalidFieldValue => "invalid-field-value"
   }
 }
 
