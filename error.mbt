@@ -49,6 +49,8 @@ pub enum WarcErrorKind {
   TrailingGarbage
   LimitExceeded
   InvalidFieldValue
+  MisplacedField
+  InvalidIpAddress
 } derive(Eq, @debug.Debug)
 
 ///|
@@ -91,6 +93,7 @@ pub fn all_kind_codes() -> Array[String] {
     "invalid-content-length", "integer-overflow", "content-length-mismatch", "missing-required-field",
     "duplicate-field", "invalid-date", "invalid-uri", "invalid-digest", "invalid-record-type",
     "invalid-separator", "trailing-garbage", "limit-exceeded", "invalid-field-value",
+    "misplaced-field", "invalid-ip-address",
   ]
 }
 
@@ -140,6 +143,8 @@ pub fn kind_of_code(code : String) -> WarcErrorKind? {
     "trailing-garbage" => Some(TrailingGarbage)
     "limit-exceeded" => Some(LimitExceeded)
     "invalid-field-value" => Some(InvalidFieldValue)
+    "misplaced-field" => Some(MisplacedField)
+    "invalid-ip-address" => Some(InvalidIpAddress)
     _ => None
   }
 }
@@ -189,6 +194,8 @@ pub fn WarcErrorKind::kind_name(self : WarcErrorKind) -> String {
     TrailingGarbage => "trailing-garbage"
     LimitExceeded => "limit-exceeded"
     InvalidFieldValue => "invalid-field-value"
+    MisplacedField => "misplaced-field"
+    InvalidIpAddress => "invalid-ip-address"
   }
 }
 
