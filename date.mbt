@@ -19,7 +19,7 @@ pub struct WarcDate {
   minute : Int?
   second : Int?
   fraction : String
-}
+} derive(Eq, @debug.Debug)
 
 ///|
 /// The days in each month (non-leap year).
