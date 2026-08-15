@@ -10,12 +10,12 @@ not yet implemented.
 
 | Spec clause | Requirement | Implementation | Tests |
 | --- | --- | --- | --- |
-| 4, `warc-record` ABNF | `header CRLF block CRLF CRLF` framing; version line first | version line: `version.mbt`; record framing *planned* (`parser.mbt`) | `version_test.mbt`; framing *planned* |
+| 4, `warc-record` ABNF | `header CRLF block CRLF CRLF` framing; version line first | `version.mbt`, `framing.mbt` | `version_test.mbt`, `framing_test.mbt` |
 | 4, `named-field` ABNF | `field-name ":" [ field-value ]`, token names, UTF-8 values, continuation lines | `field.mbt`, `header.mbt` | `fields_test.mbt`, `headers_test.mbt` |
-| 4, grammar notes | Field names case-insensitive; unknown fields ignored; LWS before values; CRLF line endings | `field.mbt`, `header.mbt`, `scanner.mbt` | `fields_test.mbt`, `headers_test.mbt`, `scanner_test.mbt` |
+| 4, grammar notes | Field names case-insensitive; unknown fields ignored; LWS before values; CRLF line endings; binary-safe block framing via Content-Length only | `field.mbt`, `header.mbt`, `scanner.mbt`, `framing.mbt` | `fields_test.mbt`, `headers_test.mbt`, `scanner_test.mbt`, `framing_test.mbt` |
 | 5.1, named fields | WARC fields shall not repeat except WARC-Concurrent-To | *planned* (`validator.mbt`) | *planned* |
 | 5.2, WARC-Record-ID (mandatory) | Legal URI, written `<uri>`, no internal whitespace | *planned* (`record.mbt`, `uri.mbt`) | *planned* |
-| 5.3, Content-Length (mandatory) | `1*DIGIT` octet count; `0` for no block; overflow-safe | `decimal.mbt` | `decimal_test.mbt` |
+| 5.3, Content-Length (mandatory) | `1*DIGIT` octet count; `0` for no block; overflow-safe; not repeatable | `decimal.mbt`, `content_length.mbt` | `decimal_test.mbt`, `content_length_test.mbt` |
 | 5.4, WARC-Date (mandatory) | W3CDTF UTC timestamp; fractional seconds 1..9 digits; multiple granularities | *planned* (`date.mbt`) | *planned* |
 | 5.5, WARC-Type (mandatory) | Eight standard types; unknown types skipped by readers | *planned* (`record.mbt`) | *planned* |
 | 5.6, Content-Type | MIME type of block; recommended for non-empty blocks except continuation | *planned* (`validator.mbt`) | *planned* |
