@@ -11,8 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # The official MoonBit installer; the toolchain is also pinned
-      # in moon.mod.json via the project's toolchain settings.
+      # The official MoonBit installer. The suite is developed and
+      # verified against MoonBit 0.1.20260713 (see
+      # docs/reproducibility.md); pin the installer to that version if
+      # a newer toolchain ever breaks this workflow.
       - name: Install MoonBit
         run: |
           curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
