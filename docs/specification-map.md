@@ -11,6 +11,7 @@ not yet implemented.
 | Spec clause | Requirement | Implementation | Tests |
 | --- | --- | --- | --- |
 | 4, `warc-record` ABNF | `header CRLF block CRLF CRLF` framing; version line first | `version.mbt`, `framing.mbt` | `version_test.mbt`, `framing_test.mbt` |
+| 4, archive structure | One or more records back to back; trailing bytes that cannot form a complete record are diagnosed; archive-level size and record-count limits | `archive.mbt` | `archive_test.mbt` |
 | 4, `named-field` ABNF | `field-name ":" [ field-value ]`, token names, UTF-8 values, continuation lines | `field.mbt`, `header.mbt` | `fields_test.mbt`, `headers_test.mbt` |
 | 4, grammar notes | Field names case-insensitive; unknown fields ignored; LWS before values; CRLF line endings; binary-safe block framing via Content-Length only | `field.mbt`, `header.mbt`, `scanner.mbt`, `framing.mbt` | `fields_test.mbt`, `headers_test.mbt`, `scanner_test.mbt`, `framing_test.mbt` |
 | 5.1, named fields | WARC fields shall not repeat except WARC-Concurrent-To | *planned* (`validator.mbt`) | *planned* |
