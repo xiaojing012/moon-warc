@@ -10,9 +10,9 @@ not yet implemented.
 
 | Spec clause | Requirement | Implementation | Tests |
 | --- | --- | --- | --- |
-| 4, `warc-record` ABNF | `header CRLF block CRLF CRLF` framing; version line first | *planned* (`header.mbt`, `parser.mbt`) | *planned* |
-| 4, `named-field` ABNF | `field-name ":" [ field-value ]`, token names, UTF-8 values, continuation lines | *planned* (`field.mbt`) | *planned* |
-| 4, grammar notes | Field names case-insensitive; unknown fields ignored; LWS before values | *planned* (`field.mbt`) | *planned* |
+| 4, `warc-record` ABNF | `header CRLF block CRLF CRLF` framing; version line first | version line: `version.mbt`; record framing *planned* (`parser.mbt`) | `version_test.mbt`; framing *planned* |
+| 4, `named-field` ABNF | `field-name ":" [ field-value ]`, token names, UTF-8 values, continuation lines | `field.mbt`, `header.mbt` | `fields_test.mbt`, `headers_test.mbt` |
+| 4, grammar notes | Field names case-insensitive; unknown fields ignored; LWS before values; CRLF line endings | `field.mbt`, `header.mbt`, `scanner.mbt` | `fields_test.mbt`, `headers_test.mbt`, `scanner_test.mbt` |
 | 5.1, named fields | WARC fields shall not repeat except WARC-Concurrent-To | *planned* (`validator.mbt`) | *planned* |
 | 5.2, WARC-Record-ID (mandatory) | Legal URI, written `<uri>`, no internal whitespace | *planned* (`record.mbt`, `uri.mbt`) | *planned* |
 | 5.3, Content-Length (mandatory) | `1*DIGIT` octet count; `0` for no block; overflow-safe | `decimal.mbt` | `decimal_test.mbt` |

@@ -53,11 +53,11 @@ pub enum WarcErrorKind {
 ///|
 /// A structured WARC error.
 pub struct WarcError {
-  pub stage : WarcErrorStage
-  pub kind : WarcErrorKind
-  pub byte_offset : Int64
-  pub record_index : Int64
-  pub context : String
+  stage : WarcErrorStage
+  kind : WarcErrorKind
+  byte_offset : Int64
+  record_index : Int64
+  context : String
 }
 
 ///|

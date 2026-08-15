@@ -15,17 +15,17 @@ pub const WARC_VERSION_LINE : String = "WARC/1.1"
 /// Per ISO 28500 clause 5, field names are compared case-insensitively;
 /// the original spelling is kept so callers can inspect or reproduce it.
 pub struct WarcField {
-  pub name : String
-  pub value : String
+  name : String
+  value : String
 }
 
 ///|
 /// A fully framed WARC record: version line, ordered named fields and
 /// the raw binary content block.
 pub struct WarcRecord {
-  pub version : String
-  pub fields : Array[WarcField]
-  pub block : Bytes
+  version : String
+  fields : Array[WarcField]
+  block : Bytes
 }
 
 ///|

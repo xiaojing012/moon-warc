@@ -9,15 +9,15 @@
 
 ///|
 pub struct Limits {
-  pub max_archive_bytes : Int64
-  pub max_record_bytes : Int64
-  pub max_header_bytes : Int64
-  pub max_header_count : Int
-  pub max_field_name_bytes : Int
-  pub max_field_value_bytes : Int
-  pub max_block_bytes : Int64
-  pub max_records : Int
-  pub max_content_length_digits : Int
+  max_archive_bytes : Int64
+  max_record_bytes : Int64
+  max_header_bytes : Int64
+  max_header_count : Int
+  max_field_name_bytes : Int
+  max_field_value_bytes : Int
+  max_block_bytes : Int64
+  max_records : Int
+  max_content_length_digits : Int
 }
 
 ///|
@@ -66,4 +66,58 @@ pub fn Limits::permissive() -> Limits {
     max_records: 100_000_000,
     max_content_length_digits: 19,
   }
+}
+
+///|
+/// A copy of these limits with `max_archive_bytes` replaced.
+pub fn Limits::with_max_archive_bytes(self : Limits, n : Int64) -> Limits {
+  { ..self, max_archive_bytes: n }
+}
+
+///|
+/// A copy of these limits with `max_record_bytes` replaced.
+pub fn Limits::with_max_record_bytes(self : Limits, n : Int64) -> Limits {
+  { ..self, max_record_bytes: n }
+}
+
+///|
+/// A copy of these limits with `max_header_bytes` replaced.
+pub fn Limits::with_max_header_bytes(self : Limits, n : Int64) -> Limits {
+  { ..self, max_header_bytes: n }
+}
+
+///|
+/// A copy of these limits with `max_header_count` replaced.
+pub fn Limits::with_max_header_count(self : Limits, n : Int) -> Limits {
+  { ..self, max_header_count: n }
+}
+
+///|
+/// A copy of these limits with `max_field_name_bytes` replaced.
+pub fn Limits::with_max_field_name_bytes(self : Limits, n : Int) -> Limits {
+  { ..self, max_field_name_bytes: n }
+}
+
+///|
+/// A copy of these limits with `max_field_value_bytes` replaced.
+pub fn Limits::with_max_field_value_bytes(self : Limits, n : Int) -> Limits {
+  { ..self, max_field_value_bytes: n }
+}
+
+///|
+/// A copy of these limits with `max_block_bytes` replaced.
+pub fn Limits::with_max_block_bytes(self : Limits, n : Int64) -> Limits {
+  { ..self, max_block_bytes: n }
+}
+
+///|
+/// A copy of these limits with `max_records` replaced.
+pub fn Limits::with_max_records(self : Limits, n : Int) -> Limits {
+  { ..self, max_records: n }
+}
+
+///|
+/// A copy of these limits with `max_content_length_digits` replaced.
+pub fn Limits::with_max_content_length_digits(self : Limits, n : Int) -> Limits {
+  { ..self, max_content_length_digits: n }
 }

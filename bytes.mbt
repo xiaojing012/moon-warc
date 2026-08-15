@@ -151,3 +151,21 @@ pub fn all_digits(data : Bytes, start : Int, end : Int) -> Bool {
   }
   true
 }
+
+///|
+/// Whether `data[start:end]` byte-equals the UTF-8 encoding of `needle`
+/// (exact case-sensitive comparison).
+pub fn eq_bytes(data : Bytes, start : Int, end : Int, needle : String) -> Bool {
+  let nb = @utf8.encode(needle)
+  if end - start != nb.length() {
+    return false
+  }
+  let mut i = 0
+  while i < nb.length() {
+    if data[start + i] != nb[i] {
+      return false
+    }
+    i = i + 1
+  }
+  true
+}
