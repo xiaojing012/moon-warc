@@ -32,3 +32,9 @@ test "block_length reports the raw octet count" {
   let e = WarcRecord::new("WARC/1.1", [], b"")
   assert_eq(e.block_length(), 0)
 }
+
+///|
+test "clause 8 MIME constants are declared" {
+  assert_eq(WARC_MIME_TYPE, "application/warc")
+  assert_eq(WARC_FIELDS_MIME_TYPE, "application/warc-fields")
+}

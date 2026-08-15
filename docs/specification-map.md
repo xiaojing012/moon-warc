@@ -21,7 +21,7 @@ not yet implemented.
 | 5.3, Content-Length (mandatory) | `1*DIGIT` octet count; `0` for no block; overflow-safe; not repeatable | `decimal.mbt`, `content_length.mbt` | `decimal_test.mbt`, `content_length_test.mbt` |
 | 5.4, WARC-Date (mandatory) | W3CDTF UTC timestamp; fractional seconds 1..9 digits; multiple granularities | `date.mbt`, `record.mbt` | `date_test.mbt`, `record_test.mbt` |
 | 5.5, WARC-Type (mandatory) | Eight standard types; unknown types skipped by readers | `record.mbt`, `validator.mbt` | `record_test.mbt`, `validator_test.mbt` |
-| 5.6, Content-Type | MIME type of block; recommended for non-empty blocks except continuation | *planned* (`validator.mbt`) | *planned* |
+| 5.6, Content-Type | MIME type of block; recommended for non-empty blocks except continuation | advisory `missing-content-type` finding in `audit.mbt` | `audit_test.mbt` |
 | 5.7, WARC-Concurrent-To | Repeatable; forbidden in warcinfo/conversion/continuation | `validator.mbt` | `validator_test.mbt` |
 | 5.8 / 5.9, digests | `algorithm:value` labelled digest (token syntax) | `digest.mbt`, `validator.mbt` | `digest_test.mbt`, `validator_test.mbt` |
 | 5.10, WARC-IP-Address | IPv4/IPv6 forms; forbidden in warcinfo/conversion/continuation | `validator.mbt` | `validator_test.mbt` |
@@ -36,7 +36,7 @@ not yet implemented.
 | 6, record types | warcinfo / response / resource / request / metadata / revisit / conversion / continuation | `record.mbt` | `record_test.mbt` |
 | 6.6 revisit | WARC-Profile mandatory; two standard profiles; payload-digest rules | `validator.mbt` | `validator_test.mbt` |
 | 7, record segmentation | First segment keeps type + number 1; continuations carry origin id, increasing number; last carries total length | `segment.mbt`, `validator.mbt` | `segment_test.mbt` |
-| 8, MIME types | `application/warc`, `application/warc-fields` | *planned* (`model.mbt` constants) | *planned* |
+| 8, MIME types | `application/warc`, `application/warc-fields` | constants in `model.mbt` (`WARC_MIME_TYPE`, `WARC_FIELDS_MIME_TYPE`) | `model_test.mbt` |
 
 ## Scope boundaries
 

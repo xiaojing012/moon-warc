@@ -10,6 +10,14 @@
 pub const WARC_VERSION_LINE : String = "WARC/1.1"
 
 ///|
+/// The MIME type of a whole archive (ISO 28500 clause 8).
+pub const WARC_MIME_TYPE : String = "application/warc"
+
+///|
+/// The MIME type of the warcinfo field block (ISO 28500 clause 8).
+pub const WARC_FIELDS_MIME_TYPE : String = "application/warc-fields"
+
+///|
 /// One named field of a WARC record header.
 ///
 /// Per ISO 28500 clause 5, field names are compared case-insensitively;
