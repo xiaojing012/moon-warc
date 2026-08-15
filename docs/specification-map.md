@@ -32,10 +32,10 @@ not yet implemented.
 | 5.17, WARC-Filename | warcinfo only | `validator.mbt` | `validator_test.mbt` |
 | 5.18, WARC-Profile | URI; mandatory on revisit | `validator.mbt` | `validator_test.mbt` |
 | 5.19, WARC-Identified-Payload-Type | MIME type; payload records only | `validator.mbt` | `validator_test.mbt` |
-| 5.20-5.22, segmentation fields | Segment-Number / Segment-Origin-ID / Segment-Total-Length placement | *planned* (`segment.mbt`) | *planned* |
-| 6, record types | warcinfo / response / resource / request / metadata / revisit / conversion / continuation | *planned* (`record.mbt`) | *planned* |
-| 6.6 revisit | WARC-Profile mandatory; two standard profiles; payload-digest rules | *planned* (`validator.mbt`, `segment.mbt`) | *planned* |
-| 7, record segmentation | First segment keeps type + number 1; continuations carry origin id, increasing number; last carries total length | *planned* (`segment.mbt`) | *planned* |
+| 5.20-5.22, segmentation fields | Segment-Number / Segment-Origin-ID / Segment-Total-Length placement | `segment.mbt`, `validator.mbt` | `segment_test.mbt` |
+| 6, record types | warcinfo / response / resource / request / metadata / revisit / conversion / continuation | `record.mbt` | `record_test.mbt` |
+| 6.6 revisit | WARC-Profile mandatory; two standard profiles; payload-digest rules | `validator.mbt` | `validator_test.mbt` |
+| 7, record segmentation | First segment keeps type + number 1; continuations carry origin id, increasing number; last carries total length | `segment.mbt`, `validator.mbt` | `segment_test.mbt` |
 | 8, MIME types | `application/warc`, `application/warc-fields` | *planned* (`model.mbt` constants) | *planned* |
 
 ## Scope boundaries

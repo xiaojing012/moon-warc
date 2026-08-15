@@ -36,6 +36,8 @@ pub fn validate_record(rec : WarcRecord, index : Int64) -> Array[WarcError] {
   }
   // Value-domain checks apply on every record type, known or unknown.
   push_all(errs, value_domain_errors(rec, index))
+  // Segmentation field syntax (clause 7).
+  push_all(errs, segment_errors(rec, index))
   errs
 }
 
@@ -239,6 +241,162 @@ fn value_domain_errors(rec : WarcRecord, index : Int64) -> Array[WarcError] {
         Ok(_) => ()
       }
       continue
+    }
+  }
+  errs
+}
+
+///|
+/// Validate a whole archive: per-record semantic validation, unique
+/// WARC-Record-IDs, and segment-sequence consistency. Errors are
+/// reported in file order.
+pub fn validate_archive(a : WarcArchive) -> Array[WarcError] {
+  let errs : Array[WarcError] = []
+  let n = a.record_count()
+  for i = 0; i < n; i = i + 1 {
+    push_all(errs, validate_record(a.record(i).unwrap(), i.to_int64()))
+  }
+  push_all(errs, duplicate_id_errors(a))
+  push_all(errs, segment_group_errors(a))
+  errs
+}
+
+///|
+/// Duplicate WARC-Record-ID violations: each later occurrence is
+/// reported once.
+fn duplicate_id_errors(a : WarcArchive) -> Array[WarcError] {
+  let errs : Array[WarcError] = []
+  let n = a.record_count()
+  for i = 0; i < n; i = i + 1 {
+    let id = field_first_of(a.record(i).unwrap().fields, "WARC-Record-ID")
+    match id {
+      None => continue
+      Some(v) =>
+        for j = 0; j < i; j = j + 1 {
+          let prev = field_first_of(
+            a.record(j).unwrap().fields,
+            "WARC-Record-ID",
+          )
+          match prev {
+            Some(p) =>
+              if p == v {
+                errs.push(
+                  val_err(
+                    i.to_int64(),
+                    WarcErrorKind::DuplicateField,
+                    "duplicate WARC-Record-ID \{v}",
+                  ),
+                )
+                break
+              }
+            None => ()
+          }
+        }
+    }
+  }
+  errs
+}
+
+///|
+/// Segment-sequence consistency checks over the whole archive: records
+/// sharing a WARC-Segment-Origin-ID must be contiguous, their
+/// WARC-Segment-Number values must run 1, 2, 3, ... and a
+/// WARC-Segment-Total-Length may only sit on the final record of its
+/// sequence.
+fn segment_group_errors(a : WarcArchive) -> Array[WarcError] {
+  let errs : Array[WarcError] = []
+  let n = a.record_count()
+  let origins : Array[String] = []
+  let first_idx : Array[Int] = []
+  let last_idx : Array[Int] = []
+  let counts : Array[Int] = []
+  let expected_next : Array[Int64] = []
+  let total_at : Array[Int] = []
+  for i = 0; i < n; i = i + 1 {
+    let rec = a.record(i).unwrap()
+    let origin = field_first_of(rec.fields, "WARC-Segment-Origin-ID")
+    match origin {
+      None => continue
+      Some(oid) => {
+        let mut g = -1
+        for k = 0; k < origins.length(); k = k + 1 {
+          if origins[k] == oid {
+            g = k
+            break
+          }
+        }
+        let seg = rec.segment_info(i.to_int64())
+        let number = match seg {
+          Ok(x) => x.number()
+          Err(_) => None
+        }
+        let total_len = match seg {
+          Ok(x) => x.total_length()
+          Err(_) => None
+        }
+        if g == -1 {
+          origins.push(oid)
+          first_idx.push(i)
+          last_idx.push(i)
+          counts.push(1)
+          expected_next.push(1)
+          total_at.push(-1)
+          g = origins.length() - 1
+        } else {
+          last_idx[g] = i
+          counts[g] = counts[g] + 1
+        }
+        match number {
+          Some(num) => {
+            if num != expected_next[g] {
+              errs.push(
+                seg_err(
+                  i.to_int64(),
+                  WarcErrorKind::InvalidFieldValue,
+                  "WARC-Segment-Number \{num} does not continue sequence \{oid} (expected \{expected_next[g]})",
+                ),
+              )
+            }
+            expected_next[g] = num + 1
+          }
+          None => ()
+        }
+        match total_len {
+          Some(_) => {
+            if total_at[g] != -1 {
+              errs.push(
+                seg_err(
+                  i.to_int64(),
+                  WarcErrorKind::InvalidFieldValue,
+                  "WARC-Segment-Total-Length appears on more than one record of sequence \{oid}",
+                ),
+              )
+            }
+            total_at[g] = i
+          }
+          None => ()
+        }
+      }
+    }
+  }
+  for g = 0; g < origins.length(); g = g + 1 {
+    if counts[g] != last_idx[g] - first_idx[g] + 1 {
+      errs.push(
+        seg_err(
+          last_idx[g].to_int64(),
+          WarcErrorKind::InvalidFieldValue,
+          "records of segment sequence \{origins[g]} are not contiguous",
+        ),
+      )
+    }
+    if total_at[g] != -1 && total_at[g] != last_idx[g] {
+      errs.push(
+        seg_err(
+          total_at[g].to_int64(),
+          WarcErrorKind::InvalidFieldValue,
+          "WARC-Segment-Total-Length appears before the final record of sequence \{origins[g]}",
+        ),
+      )
     }
   }
   errs
