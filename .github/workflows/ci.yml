@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The official MoonBit installer; the toolchain is also pinned
+      # in moon.mod.json via the project's toolchain settings.
+      - name: Install MoonBit
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+
+      - name: Format check
+        run: moon fmt --check
+
+      - name: Type check
+        run: moon check
+
+      - name: Test (wasm-gc)
+        run: moon test --target wasm-gc
+
+      - name: Test (js)
+        run: moon test --target js
+
+      - name: Test (native)
+        run: moon test --target native
+
+      - name: Run CLI
+        run: moon run cli stats
+
+      - name: Run examples
+        run: moon run examples index

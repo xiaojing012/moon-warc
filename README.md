@@ -47,13 +47,33 @@ warc-fields  = *named-field CRLF
 block        = *OCTET
 ```
 
+## CLI and Examples
+
+A small command-line entry point (`cli/`) operates on a built-in demo
+archive (this build has no file-system I/O):
+
+```
+moon run cli help
+moon run cli parse | validate | inspect | stats | audit
+moon run cli query http://example.org/a
+moon run cli build
+```
+
+Runnable examples (`examples/`) demonstrate each slice of the library:
+
+```
+moon run examples parse | build | validate | index | audit
+```
+
 ## Development Status
 
-Development version 0.1.0-dev. The core model, structured error model,
-resource limits, byte utilities and overflow-safe decimal parsing are
-implemented and covered by tests on all three MoonBit targets
-(wasm-gc, js, native). Record framing, parsing, validation, indexing,
-audit, CLI tooling and documentation are being built up incrementally.
+Development version 0.1.0-dev. The complete record model, framing,
+buffered parser, streaming decoder, writer/builder, semantic validator,
+segmentation, indexing and statistics, and the audit engine are
+implemented and covered by 207 tests on all three MoonBit targets
+(wasm-gc, js, native); see `docs/` for the specification map,
+architecture notes, limitations and the reproducibility guide.
+`verify_all.ps1` runs the whole verification in one go.
 
 ## License
 
