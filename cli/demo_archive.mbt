@@ -33,7 +33,7 @@ fn demo_archive() -> @warc.WarcArchive {
     .warc_date("2020-01-01T00:00:00Z")
     .field("WARC-Filename", "demo.warc")
     .field("Content-Type", "application/warc-fields")
-    .build(b"software: moon-warc 0.1.0-dev\r\nformat: WARC File Format 1.1\r\n")
+    .build(b"software: moon-warc 0.1.0\r\nformat: WARC File Format 1.1\r\n")
     .unwrap()
   let resp_a = @warc.WarcBuilder::new()
     .with_type("response")

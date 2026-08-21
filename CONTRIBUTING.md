@@ -5,16 +5,17 @@ library; contributions that fit its scope are welcome.
 
 ## Toolchain
 
-- MoonBit 0.1.20260713 (later toolchains should work; if not, file an
-  issue).
+- MoonBit 0.1.20260819 or later.
 - Windows: `powershell -ExecutionPolicy Bypass -File verify_all.ps1`.
-- Linux/macOS: run the same steps by hand (`moon fmt --check`,
-  `moon check`, `moon test --target wasm-gc|js|native`).
+  If `moon` is not on `PATH`, pass `-Moon <path-to-moon.exe>`.
+- Linux/macOS: run the same strict steps by hand (`moon fmt --check`,
+  `moon info`, `moon check --target all --deny-warn`,
+  `moon build --target all`, `moon test --target all --deny-warn`).
 
 ## Development rules
 
 1. **One commit per feature.** Each commit must pass the full test
-   matrix on all three targets before it is pushed. No empty commits,
+   matrix on all four targets before it is pushed. No empty commits,
    no rebasing/squashing of published history, no backdating.
 2. **Tests with every feature.** The matching `*_test.mbt` grows with
    the module; behavioural changes update tests in the same commit.

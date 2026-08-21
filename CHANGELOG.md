@@ -2,13 +2,13 @@
 
 All notable changes to moon-warc are recorded here. The project follows
 a commit-by-feature discipline: every entry below is a real, pushed
-commit whose full test suite passed on `wasm-gc`, `js` and `native`
+commit whose full test suite passed on `wasm`, `wasm-gc`, `js` and `native`
 before it was made.
 
-## 0.1.0-dev
+## 0.1.0
 
-Development releases toward the first published version. Each entry is
-one commit (oldest first):
+First public Mooncakes release. The release contains 208 tests on each of the
+four MoonBit targets and the following development commits (oldest first):
 
 - **chore: initialize WARC core model and safe parsing foundations** —
   project skeleton: module metadata, license, core model

@@ -6,7 +6,7 @@
 
 ///|
 /// The version reported by `version`.
-const VERSION : String = "0.1.0-dev"
+const VERSION : String = "0.1.0"
 
 ///|
 /// Dispatch on argv[1].

@@ -1,7 +1,7 @@
 # Testing
 
 Every module has a matching black-box test file in the same package.
-The suite is run identically on all three MoonBit targets.
+The suite is run identically on all four MoonBit targets.
 
 ## Test matrix
 
@@ -31,7 +31,7 @@ The suite is run identically on all three MoonBit targets.
 | `version_test.mbt` | 5 | version line recognition |
 | `truncation_test.mbt` | 3 | cross-module stress/property tests |
 
-**Total: 208 tests** on each of `wasm-gc`, `js` and `native`.
+**Total: 208 tests** on each of `wasm`, `wasm-gc`, `js` and `native`.
 
 ## Cross-module stress tests
 
@@ -50,11 +50,9 @@ boundaries:
 ## Running the tests
 
 ```
-moon test --target wasm-gc
-moon test --target js
-moon test --target native
+moon test --target all --deny-warn
 ```
 
-or run everything (formatting, type checking, the three-target matrix,
+or run everything (formatting, interface generation, strict four-target checks,
 CLI and examples) with `verify_all.ps1`. CI runs the same steps on
 every push (`.github/workflows/ci.yml`).

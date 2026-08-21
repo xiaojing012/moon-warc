@@ -4,10 +4,10 @@ A streaming WARC 1.1 (ISO 28500) parser, writer, validator, indexer and
 audit toolkit for MoonBit.
 
 - **Module:** `xiaojing012/moon-warc`
-- **Version:** 0.1.0-dev
+- **Version:** 0.1.0
 - **Repository:** https://github.com/xiaojing012/moon-warc
 - **Applicant / Maintainer:** 宋晓静 / xiaojing012
-- **Mooncakes:** not published yet
+- **Mooncakes:** `xiaojing012/moon-warc`
 
 ## Overview
 
@@ -23,6 +23,29 @@ buffered and incremental streaming parsing, deterministic writing,
 semantic validation, segmentation support, in-memory indexing, and an
 advisory audit engine — with structured errors, resource limits and
 cross-target tests along the way.
+
+## Install
+
+```bash
+moon add xiaojing012/moon-warc
+```
+
+Add the package alias to the consumer's `moon.pkg`:
+
+```moonbit
+import {
+  "xiaojing012/moon-warc" @warc,
+}
+```
+
+Parse an in-memory WARC archive with structured limits and errors:
+
+```moonbit
+match @warc.parse_archive(data, @warc.Limits::default()) {
+  Ok(archive) => println("records: \{archive.record_count()}")
+  Err(error) => println(error.to_string())
+}
+```
 
 ## Why WARC
 
@@ -67,11 +90,11 @@ moon run examples parse | build | validate | index | audit
 
 ## Development Status
 
-Development version 0.1.0-dev. The complete record model, framing,
+Released version 0.1.0. The complete record model, framing,
 buffered parser, streaming decoder, writer/builder, semantic validator,
 segmentation, indexing and statistics, and the audit engine are
-implemented and covered by 207 tests on all three MoonBit targets
-(wasm-gc, js, native); see `docs/` for the specification map,
+implemented and covered by 208 tests on all four MoonBit targets
+(`wasm`, `wasm-gc`, `js`, `native`); see `docs/` for the specification map,
 architecture notes, limitations and the reproducibility guide.
 `verify_all.ps1` runs the whole verification in one go.
 

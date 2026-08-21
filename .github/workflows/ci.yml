@@ -9,34 +9,32 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+      - uses: hustcer/setup-moonbit@v1.22
 
-      # The official MoonBit installer. The suite is developed and
-      # verified against MoonBit 0.1.20260713 (see
-      # docs/reproducibility.md); pin the installer to that version if
-      # a newer toolchain ever breaks this workflow.
-      - name: Install MoonBit
-        run: |
-          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
-          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: Toolchain
+        run: moon version --all
 
       - name: Format check
         run: moon fmt --check
 
-      - name: Type check
-        run: moon check
+      - name: Public interface
+        run: moon info
 
-      - name: Test (wasm-gc)
-        run: moon test --target wasm-gc
+      - name: Strict four-target check
+        run: moon check --target all --deny-warn
 
-      - name: Test (js)
-        run: moon test --target js
+      - name: Four-target build
+        run: moon build --target all
 
-      - name: Test (native)
-        run: moon test --target native
+      - name: Strict four-target tests
+        run: moon test --target all --deny-warn
 
       - name: Run CLI
         run: moon run cli stats
 
       - name: Run examples
         run: moon run examples index
+
+      - name: Package check
+        run: moon package --list

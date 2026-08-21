@@ -5,7 +5,7 @@ single pinned toolchain and no network access at build time.
 
 ## Toolchain
 
-- **MoonBit 0.1.20260713** (the `moon` CLI; module format `moon.mod` /
+- **MoonBit 0.1.20260819** (the `moon` CLI; module format `moon.mod` /
   `moon.pkg`).
 - Dependencies: `moonbitlang/core` only (buffer, debug, encoding/utf8,
   env) — resolved by the toolchain, no third-party packages.
@@ -18,10 +18,10 @@ From the repository root:
 
 ```
 moon fmt --check   # style
-moon check         # type checking of every package
-moon test --target wasm-gc
-moon test --target js
-moon test --target native
+moon info
+moon check --target all --deny-warn
+moon build --target all
+moon test --target all --deny-warn
 ```
 
 The whole verification, including the CLI and example entry points, is
@@ -31,9 +31,11 @@ a single script:
 powershell -ExecutionPolicy Bypass -File verify_all.ps1
 ```
 
+If `moon` is not on `PATH`, use `-Moon <path-to-moon.exe>`.
+
 `.github/workflows/ci.yml` performs the same checks on every push to
-`main` and every pull request (format, type check, three-target test
-matrix, CLI and examples smoke runs).
+`main` and every pull request (format, interface, strict four-target check,
+build and test, CLI and examples smoke runs, and package validation).
 
 ## Determinism notes
 
@@ -47,7 +49,8 @@ matrix, CLI and examples smoke runs).
 ## Reproducing a specific release
 
 1. Check out the tag or commit.
-2. Install MoonBit 0.1.20260713.
+2. Install MoonBit 0.1.20260819 or a compatible later toolchain.
 3. Run `verify_all.ps1` (or the CI steps above by hand).
 
-Expected result: all checks pass and 208 tests pass on each target.
+Expected result: all checks pass and 208 tests pass on each of `wasm`,
+`wasm-gc`, `js` and `native`.

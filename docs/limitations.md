@@ -1,6 +1,6 @@
 # Limitations
 
-This is version 0.1.0-dev. The following areas are deliberately out of
+This is version 0.1.0. The following areas are deliberately out of
 scope for this version; each one is listed with the reason and the
 workaround where one exists.
 
