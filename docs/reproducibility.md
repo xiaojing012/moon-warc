@@ -54,3 +54,9 @@ build and test, CLI and examples smoke runs, and package validation).
 
 Expected result: all checks pass and 208 tests pass on each of `wasm`,
 `wasm-gc`, `js` and `native`.
+
+## 0.1.0 release evidence
+
+- GitHub Actions completed the full workflow successfully.
+- `moon publish --dry-run` was accepted by the server with no changes made.
+- The formal `moon publish` request returned `200 OK`.

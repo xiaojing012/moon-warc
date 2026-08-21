@@ -7,7 +7,7 @@ audit toolkit for MoonBit.
 - **Version:** 0.1.0
 - **Repository:** https://github.com/xiaojing012/moon-warc
 - **Applicant / Maintainer:** 宋晓静 / xiaojing012
-- **Mooncakes:** `xiaojing012/moon-warc`
+- **Mooncakes:** [`xiaojing012/moon-warc`](https://mooncakes.io/docs/xiaojing012/moon-warc)
 
 ## Overview
 
